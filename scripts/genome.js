@@ -1,5 +1,3 @@
-import * as Tools from './tools.js';
-
 // ----------- Genome ----------- //
 // holds the genetic information of each monkey
 export default class Genome {
@@ -42,8 +40,8 @@ export default class Genome {
 
    // return the totals of each charcter from the chars string that are present in the str string
    getCharCounts(str, chars) {
-      let counts = [];
-      for (let i = 0; i < chars.length; i++) {
+      let counts = [], l = chars.length;
+      for (let i = 0; i < l; i++) {
          let count = this.countChar(str, chars.charAt(i));
          counts.push(count);
       }
@@ -52,8 +50,8 @@ export default class Genome {
 
    // returns the total times a single charecter shows up in a string
    countChar(str, c) {
-      let result = 0;
-      for (let i = 0; i < str.length; i++) {
+      let result = 0, l = str.length;
+      for (let i = 0; i < l; i++) {
          if (str[i] == c) {
             result++;
          }

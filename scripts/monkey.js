@@ -42,8 +42,8 @@ export default class Monkey {
 
    // returns the difference between the numbers charecters that match and those that do not
    matchingChars(target, source) {
-      let matches = 0;
-      for (let i = 0; i < source.length; i++) {
+      let matches = 0, l = source.length;
+      for (let i = 0; i < l; i++) {
          if (source.charAt(i) == target.charAt(i)) {
             matches++;
          }
@@ -56,8 +56,8 @@ export default class Monkey {
 
    // returns a number equal to the sum of the distances between the values of two arrays 
    totalDistance(target, source) {
-      let total = 0;
-      for (let i = 0; i < source; i++) {
+      let total = 0, l = source.length;
+      for (let i = 0; i < l; i++) {
          total += this.distance(source[i], target[i]);
       }
       return total;
