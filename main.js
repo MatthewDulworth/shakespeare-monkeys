@@ -1,5 +1,5 @@
 // ----------- Constants ----------- //
-const goal = "a";
+const goal = "AABkljfoa;ijkjalwkjerfhlkajwelLHA:S\\\ \"/>?FJNA:KJBlbALKJDFK:OEUF:W";
 
 // ----------- Genome ----------- //
 // holds the genetic information of each monkey
@@ -24,11 +24,12 @@ class Genome {
       return Genome.nucleotides().charAt(index);
    }
 
-   // the possible nucleotides that make up the genome 
+   // the possible nucleotides that make up the genome, includes all standerd qwerty charecters
    static nucleotides() {
-      let nuc = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789{}[]|~`!@#$%^&*()-_=+<>, .?/:;\'\"\\"
-      return "a";
+      let nucs = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789{}[]|~`!@#$%^&*()-_=+<>, .?/:;\'\"\\"
+      return nucs;
    }
+
 }
 
 // ----------- Monkey ----------- //
@@ -71,8 +72,7 @@ class Population {
       return monkeys;
    }
 
-   display()
-   {
+   display() {
       console.log(`Goal: ${goal}`);
       console.log(`***** Generation: ${this.generation} *****`);
       this.monkeys.forEach(m => {
@@ -84,5 +84,43 @@ class Population {
 
 // ----------- Main ----------- //
 // execution starts here
+
+let goalData = analyzeGoal(goal, Genome.nucleotides());
+
 let population = new Population(1, goal.length);
-population.display();
+
+
+
+// ----------- Functions ----------- //
+function analyzeGoal(str, chars) {
+
+   let data = {
+      charCounts: [],
+   };
+
+   data.charCounts = getCharCounts(str, chars);
+
+   return data;
+}
+
+function getCharCounts(str, chars)
+{
+   let counts = [];
+   for (let i = 0; i < chars.length; i++) {
+      let count = countChar(str, chars.charAt(i));
+      console.log(chars.charAt(i), count);
+
+      counts.push(count);
+   }
+   return counts;
+}
+
+function countChar(str, c) {
+   let result = 0;
+   for (let i = 0; i < str.length; i++) {
+      if (str[i] == c) {
+         result++;
+      }
+   }
+   return result;
+};
