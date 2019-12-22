@@ -1,5 +1,5 @@
 // ----------- Constants ----------- //
-const shakespeare = "this is a test";
+const goal = "a";
 
 // ----------- Genome ----------- //
 // holds the genetic information of each monkey
@@ -19,16 +19,15 @@ class Genome {
    }
 
    // get a random charecter from the nucleotide string
-   getRandomNucleotide()
-   {
+   getRandomNucleotide() {
       let index = Math.floor(Math.random() * Genome.nucleotides().length);
       return Genome.nucleotides().charAt(index);
    }
 
    // the possible nucleotides that make up the genome 
-   static nucleotides()
-   {
-      return "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789{}[]|~`!@#$%^&*()-_=+<>, .?/:;\'\"\\";
+   static nucleotides() {
+      let nuc = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789{}[]|~`!@#$%^&*()-_=+<>, .?/:;\'\"\\"
+      return "a";
    }
 }
 
@@ -38,12 +37,19 @@ class Monkey {
 
    constructor(genomeLength) {
       this.genome = new Genome(genomeLength);
-      this.fitness = this.calculateFitness;
+      this.fitness = this.calculateFitness();
    }
 
-   // each correct letter is +1 fitness, each correct word is +2 fitness
+   // each correct letter in the correct place is +1 fitness
    calculateFitness() {
       let fitness = 0;
+
+      for (let i = 0; i < goal.size; i++) {
+         if (this.genome.string.charAt(i) == goal.charAt(i)) {
+            fitness = fitness + 1;
+         }
+      }
+
       return fitness;
    }
 }
@@ -52,6 +58,7 @@ class Monkey {
 // the set of monkeys and the methods to evolve them
 class Population {
    constructor(size, genomeLength) {
+      this.generation = 1;
       this.size = size;
       this.monkeys = this.initialPopulation(size, genomeLength);
    }
@@ -63,13 +70,19 @@ class Population {
       }
       return monkeys;
    }
+
+   display()
+   {
+      console.log(`Goal: ${goal}`);
+      console.log(`***** Generation: ${this.generation} *****`);
+      this.monkeys.forEach(m => {
+         console.log(`Genome: {{${m.genome.string}}} Fitness: ${m.fitness}`);
+      });
+   }
 }
 
 
 // ----------- Main ----------- //
 // execution starts here
-let population = new Population(5, 100);
-
-population.monkeys.forEach(monkey => {
-   console.log(monkey.genome.string);
-});
+let population = new Population(1, goal.length);
+population.display();
