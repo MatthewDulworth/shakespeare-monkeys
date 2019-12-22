@@ -44,7 +44,7 @@ class Monkey {
    calculateFitness() {
       let fitness = 0;
 
-      for (let i = 0; i < goal.size; i++) {
+      for (let i = 0; i < goal.length; i++) {
          if (this.genome.string.charAt(i) == goal.charAt(i)) {
             fitness = fitness + 1;
          }
