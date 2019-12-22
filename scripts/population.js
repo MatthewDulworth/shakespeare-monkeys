@@ -26,6 +26,14 @@ export default class Population {
       });
    }
 
+   displayFittest(num) {
+      console.log("Fittest");
+      let best = this.findFittest(num);
+      best.forEach(m => {
+         console.log(`Genome: { ${m.genome.str} } Fitness: ${m.fitness}`);
+      });
+   }
+
    findFittest(num) {
       let tempArray = this.monkeys.concat();
       let bestArray = [];
@@ -40,7 +48,6 @@ export default class Population {
             tempArray.splice(index, 1);
          }
       }
-      console.log(bestArray);
       return bestArray;
    }
 
