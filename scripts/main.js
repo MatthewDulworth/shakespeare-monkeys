@@ -8,3 +8,4 @@ console.log(goal);
 
 let population = new Population(5, goal);
 population.display();
+population.findFittest(2);
