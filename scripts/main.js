@@ -1,5 +1,5 @@
-// ----------- Imports ----------- //
-import { Population, Genome } from "./genetics.js";
+import Population from "./population.js";
+import Genome from "./genome.js";
 
 // ----------- Main ----------- //
 let goal = new Genome();
