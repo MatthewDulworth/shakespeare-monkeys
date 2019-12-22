@@ -1,9 +1,25 @@
+// ----------- Imports ----------- //
+import * as StringTools from "./string-tools.js"
+
+
 // ----------- Genome ----------- //
 // holds the genetic information of each monkey
 export class Genome {
    constructor(length) {
+      this.str = this.generateRandomGenome(length);
       this.length = length;
-      this.string = this.generateRandomGenome(length);
+      this.charCounts = StringTools.getCharCounts(this.str, Genome.nucleotides());
+      this.words = StringTools.getWords(this.str);
+      this.wordCount = this.words.size;
+   }
+
+   // sets the genome to a specific pattern
+   setTo(str) {
+      this.str = str;
+      this.length = str.length;
+      this.charCounts = StringTools.getCharCounts(this.str, Genome.nucleotides());
+      this.words = StringTools.getWords(this.str);
+      this.wordCount = this.words.size;
    }
 
    // generates a random string of nucleotides up to length
@@ -42,12 +58,6 @@ class Monkey {
    calculateFitness(goal) {
       let fitness = 0;
 
-      for (let i = 0; i < goal.length; i++) {
-         if (this.genome.string.charAt(i) == goal.charAt(i)) {
-            fitness = fitness + 1;
-         }
-      }
-
       return fitness;
    }
 }
@@ -74,7 +84,7 @@ export class Population {
       console.log(`Goal: ${this.goal}`);
       console.log(`***** Generation: ${this.generation} *****`);
       this.monkeys.forEach(m => {
-         console.log(`Genome: {{${m.genome.string}}} Fitness: ${m.fitness}`);
+         console.log(`Genome: { ${m.genome.str} } Fitness: ${m.fitness}`);
       });
    }
 }

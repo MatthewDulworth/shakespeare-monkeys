@@ -12,6 +12,10 @@ export function getWords(str) {
    return str.split(' ');
 }
 
+export function getWordCount(str) {
+   return str.split(' ').size;
+}
+
 export function getCharCounts(str, chars) {
    let counts = [];
    for (let i = 0; i < chars.length; i++) {
