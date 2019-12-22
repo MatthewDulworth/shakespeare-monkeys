@@ -1,8 +1,8 @@
 // ----------- Imports ----------- //
-import {Population, Genome} from "./genetics.js";
+import { Population, Genome } from "./genetics.js";
 
 // ----------- Main ----------- //
-let goal = new Genome(0);
+let goal = new Genome();
 goal.setTo("Hello There! General Kenobi!");
 console.log(goal);
 

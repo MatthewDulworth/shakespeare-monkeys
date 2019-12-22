@@ -1,5 +1,5 @@
 // ----------- Imports ----------- //
-import * as StringTools from "./string-tools.js"
+import * as Tools from "./tools.js"
 
 
 // ----------- Genome ----------- //
@@ -8,18 +8,18 @@ export class Genome {
    constructor(length) {
       this.str = this.generateRandomGenome(length);
       this.length = length;
-      this.charCounts = StringTools.getCharCounts(this.str, Genome.nucleotides());
-      this.words = StringTools.getWords(this.str);
-      this.wordCount = this.words.size;
+      this.charCounts = Tools.getCharCounts(this.str, Genome.nucleotides());
+      this.words = Tools.getWords(this.str);
+      this.wordCount = this.words.length;
    }
 
    // sets the genome to a specific pattern
    setTo(str) {
       this.str = str;
       this.length = str.length;
-      this.charCounts = StringTools.getCharCounts(this.str, Genome.nucleotides());
-      this.words = StringTools.getWords(this.str);
-      this.wordCount = this.words.size;
+      this.charCounts = Tools.getCharCounts(this.str, Genome.nucleotides());
+      this.words = Tools.getWords(this.str);
+      this.wordCount = this.words.length;
    }
 
    // generates a random string of nucleotides up to length
@@ -54,9 +54,16 @@ class Monkey {
       this.fitness = this.calculateFitness(goal);
    }
 
-   // each correct letter in the correct place is +1 fitness
+   // calculates the fitness of the monkey
+   // * charecters in the correct location increase
+   // * number of charecters correct increase
+   // * correct number of words increase
+   // * correct words increase
    calculateFitness(goal) {
       let fitness = 0;
+
+      let correct_chars = Tools.matchingChars(goal.str, this.genome.str);
+      let common_words = Tools.intersections(goal.words, this.genome.words);
 
       return fitness;
    }
