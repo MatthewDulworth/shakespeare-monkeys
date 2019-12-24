@@ -1,46 +1,32 @@
 import Monkey from "./monkey.js";
 
 // ----------- Population ----------- //
-// the set of monkeys and the methods to evolve them
+// the set of monkeys
 export default class Population {
-   constructor(size, goal) {
+   constructor(size, target) {
       this.generation = 1;
       this.size = size;
-      this.goal = goal;
-      this.monkeys = this.initialPopulation(size, goal);
+      this.target = target;
+      this.monkeys = this.initialPopulation(size, target);
    }
 
-   initialPopulation(size, goal) {
+   // generates a random initial population
+   initialPopulation(size, target) {
       let monkeys = [];
       for (let i = 0; i < size; i++) {
-         monkeys.push(new Monkey(goal));
+         monkeys.push(new Monkey(target));
       }
       return monkeys;
    }
 
-   display() {
-      console.log(`Goal: ${this.goal}`);
-      console.log(`***** Generation: ${this.generation} *****`);
-      this.monkeys.forEach(m => {
-         console.log(`Genome: { ${m.genome.str} } Fitness: ${m.fitness}`);
-      });
-   }
-
-   displayFittest(num) {
-      console.log("Fittest");
-      let best = this.findFittest(num);
-      best.forEach(m => {
-         console.log(`Genome: { ${m.genome.str} } Fitness: ${m.fitness}`);
-      });
-   }
-
+   // finds 
    findFittest(num) {
       let tempArray = this.monkeys.concat();
       let bestArray = [];
       let bestMonkey;
 
       for (let i = 0; i < num; i++) {
-         bestMonkey = this.findMax(tempArray);
+         bestMonkey = this.findMin(tempArray);
          bestArray.push(bestMonkey);
 
          let index = tempArray.indexOf(bestMonkey);
@@ -51,12 +37,12 @@ export default class Population {
       return bestArray;
    }
 
-   findMax(monkeys) {
-      let max = -Infinity, l = monkeys.length, bestMonkey;
+   findMin(monkeys) {
+      let min = Infinity, l = monkeys.length, bestMonkey;
       for (let i = 0; i < l; i++) {
-         if (monkeys[i].fitness > max) {
+         if (monkeys[i].fitness < min) {
             bestMonkey = monkeys[i];
-            max = bestMonkey.fitness;
+            min = bestMonkey.fitness;
          }
       }
       return bestMonkey;
