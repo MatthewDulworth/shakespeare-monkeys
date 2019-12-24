@@ -4,6 +4,8 @@ export default class Monkey {
 
    constructor(genome) {
       this.genome = genome;
+      this.p1 = "";
+      this.p2 = "";
    }
 
    // randomizes the genome of the monkey
@@ -16,7 +18,7 @@ export default class Monkey {
 
    // calculates the fitness of the monkey
    calculateFitness(target) {
-      let i = 0, l = this.genome.length;
+      let i = 0, l = target.length;
       this.fitness = 0;
 
       for (i; i < l; i++) {
@@ -28,24 +30,26 @@ export default class Monkey {
    }
 
    // returns the offspring of the two monkeys
-   static mate(monkey1, monkey2, genome_length) {
-      let offspring = new Monkey(target);
+   static mate(monkey1, monkey2, mutation_chance, target) {
+      let genome = "";
+      let i=0, l = target.length;
 
-      for (let i = 0; i < genome_length; i++) {
-         let parent1 = Math.random < 0.5;
+      for (i; i <l; i++) {
+         let parent1 = Math.random() < 0.5;
 
-         if (Math.random() < this.mutation_chance) {
-            offspring.genome += Monkey.getRandomNucleotide();
+         if (Math.random() < mutation_chance) {
+            genome += Monkey.getRandomNucleotide();
          }
          else if (parent1) {
-            offspring.genome += monkey1.genome.charAt(i);
+            genome += monkey1.genome.charAt(i);
          }
          else if (!parent1) {
-            offspring.genome += monkey2.genome.charAt(i);
+            genome += monkey2.genome.charAt(i);
          }
       }
 
-      offspring.calculateFitness();
+      let offspring = new Monkey(genome);
+      offspring.calculateFitness(target);
       return offspring;
    }
 

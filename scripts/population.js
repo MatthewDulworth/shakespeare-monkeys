@@ -19,7 +19,7 @@ export default class Population {
    initialPopulation(size, target) {
       let monkeys = [];
       for (let i = 0; i < size; i++) {
-         let monkey = new Monkey(target);
+         let monkey = new Monkey();
          monkey.randomizeGenome(target.length);
          monkey.calculateFitness(target);
          monkeys.push(monkey);
@@ -28,21 +28,25 @@ export default class Population {
    }
 
    // creates a new generation of monkeys from the last one
-   newGeneration() {
+   createNewGeneration() {
       let new_generation = [];
       let selected_monkeys = this.selectMatingMonkeys();
 
-      while (selected_monkeys.length > 0) {
-         let monkey1 = this.getRandomMonkey(selected_monkeys);
-         this.removeMonkey(monkey1, selected_monkeys);
+      for(let i=0; i<2; i++)
+      {
+         let temp = selected_monkeys.concat();
 
-         let monkey2 = this.getRandomMonkey(selected_monkeys);
-         this.removeMonkey(monkey2, selected_monkeys);
-
-         new_generation.push(Monkey.mateMonkeys(monkey1, monkey2, this.target.length));
+         while (temp.length > 0) {
+            let monkey1 = this.getRandomMonkey(temp);
+            this.removeMonkey(monkey1, temp);
+   
+            let monkey2 = this.getRandomMonkey(temp);
+            this.removeMonkey(monkey2, temp);
+   
+            new_generation.push(Monkey.mate(monkey1, monkey2, this.mutation_chance ,this.target));
+         }
       }
-
-      return this.sortMonkeys(new_generation);
+      this.monkeys = this.sortMonkeys(new_generation);
    }
 
    // selects the monkeys that will mate
@@ -98,5 +102,11 @@ export default class Population {
       } else {
          return 2;
       }
+   }
+
+   // returns the monkey with the best fitness
+   getBestMonkey()
+   {
+      return this.monkeys[0];
    }
 }
