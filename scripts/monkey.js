@@ -7,6 +7,18 @@ export default class Monkey {
       this.fitness = Monkey.calculateFitness(target, this.genome);
    }
 
+   static compare(a, b) {
+      if (a.fitness < b.fitness) {
+         return 1;
+      }
+      else if (a.fitness > b.fitness) {
+         return -1;
+      }
+      else {
+         return 0;
+      }
+   }
+
    static generateRandomGenome(length) {
       let str = "";
       for (let i = 0; i < length; i++) {
