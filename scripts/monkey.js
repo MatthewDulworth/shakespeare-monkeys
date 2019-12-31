@@ -4,8 +4,6 @@ export default class Monkey {
 
    constructor(genome) {
       this.genome = genome;
-      this.p1 = "";
-      this.p2 = "";
    }
 
    // randomizes the genome of the monkey
@@ -22,7 +20,7 @@ export default class Monkey {
       this.fitness = 0;
 
       for (i; i < l; i++) {
-         if (this.genome.charAt(i) != target.charAt(i)) {
+         if (this.genome.charAt(i) !== target.charAt(i)) {
             this.fitness++;
          }
       }

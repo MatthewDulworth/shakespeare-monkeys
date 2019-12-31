@@ -1,23 +1,30 @@
 import Population from "./population.js";
 
-// ----------- Main ----------- //
+// // ----------- Main ----------- //
 let target = "Hello There! General Kenobi!";
-
-let population = new Population(100, target, 0.1, 0.95, 0.5);
-console.log("gen1");
-console.log(population);
-
-population.createNewGeneration();
-console.log("gen2");
-console.log(population);
+let population = new Population(11, target, 0.1, 0.95, 0.5);
 
 
-//evolveMonkeys(population);
+// while(population.getBestMonkey().fitness != 0)
+// {
+//    console.log(i);
+//    let bm = population.getBestMonkey();
+//    population.createNewGeneration();
+//    console.log(bm);
 
-async function evolveMonkeys(pop) {
-   do {
-      pop.createNewGeneration();
+//    if(bm.fitness == 0){
+//       console.log(bm);
+//       break;
+//    }
+//    i++;
+// }
 
-      await new Promise(r => setTimeout(r, 100));
-   } while (pop.getBestMonkey().fitness != 0);
-}
+// evolveMonkeys(population);
+
+// async function evolveMonkeys(pop) {
+//    do {
+//       pop.createNewGeneration();
+
+//       await new Promise(r => setTimeout(r, 100));
+//    } while (pop.getBestMonkey().fitness != 0);
+// }
