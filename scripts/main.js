@@ -1,30 +1,31 @@
 import Population from "./population.js";
 
 // // ----------- Main ----------- //
-let target = "Hello There! General Kenobi!";
-let population = new Population(11, target, 0.1, 0.95, 0.5);
+let target = "Tomorrow, and tomorrow, and tomorrow,\n" +
+    "Creeps in this petty pace from day to day,\n" +
+    "To the last syllable of recorded time;\n" +
+    "And all our yesterdays have lighted fools\n" +
+    "The way to dusty death. Out, out, brief candle!\n" +
+    "Life's but a walking shadow, a poor player,\n" +
+    "That struts and frets his hour upon the stage,\n" +
+    "And then is heard no more. It is a tale\n" +
+    "Told by an idiot, full of sound and fury,\n" +
+    "Signifying nothing.";
+let population = new Population(500, target, 0.01, 0.95, 0.01);
 
+evolve(population);
 
-// while(population.getBestMonkey().fitness != 0)
-// {
-//    console.log(i);
-//    let bm = population.getBestMonkey();
-//    population.createNewGeneration();
-//    console.log(bm);
+async function evolve(population)
+{
+    while (population.getBestMonkey().fitness > 0)
+    {
+        population.createNewGeneration();
+        console.log(population.getBestMonkey());
 
-//    if(bm.fitness == 0){
-//       console.log(bm);
-//       break;
-//    }
-//    i++;
-// }
-
-// evolveMonkeys(population);
-
-// async function evolveMonkeys(pop) {
-//    do {
-//       pop.createNewGeneration();
-
-//       await new Promise(r => setTimeout(r, 100));
-//    } while (pop.getBestMonkey().fitness != 0);
-// }
+        if(population.getBestMonkey().fitness === 0)
+        {
+            console.log(`goal reached in ${population.generation} generations`);
+        }
+        await new Promise(r => setTimeout(r, 0));
+    }
+}

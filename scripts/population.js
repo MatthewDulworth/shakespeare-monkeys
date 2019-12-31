@@ -2,23 +2,27 @@ import Monkey from "./monkey.js";
 
 // ----------- Population ----------- //
 // the set of monkeys
-export default class Population {
-    constructor(size, target, mutation_chance, mating_chance, mating_percentage) {
+export default class Population
+{
+    constructor(size, target, mutation_chance, mating_chance, mating_percentage)
+    {
         this.generation = 1;
         this.size = size;
         this.target = target;
-        this.monkeys = this.initialPopulation(size, target);
+        this.monkeys = this.initialPopulation(this.size, this.target);
 
         this.mutation_chance = mutation_chance;
         this.mating_percentage = mating_percentage;
         this.mating_chance = mating_chance;
-        this.mating_population = this.calculateMatingPopulation(size, mating_percentage);
+        this.mating_population = this.calculateMatingPopulation(this.size, this.mating_percentage);
     }
 
     // generates a random initial population
-    initialPopulation(size, target) {
+    initialPopulation(size, target)
+    {
         let monkeys = [];
-        for (let i = 0; i < size; i++) {
+        for (let i = 0; i < size; i++)
+        {
             let monkey = new Monkey();
             monkey.randomizeGenome(target.length);
             monkey.calculateFitness(target);
@@ -28,50 +32,86 @@ export default class Population {
     }
 
     // creates a new generation of monkeys from the last one
-    createNewGeneration() {
+    createNewGeneration()
+    {
         let new_generation = [];
         let selected_monkeys = this.selectMatingMonkeys();
 
-        for (let i = 0; i < 2; i++) {
-            let temp = selected_monkeys.concat();
+        while (new_generation.length < this.size)
+        {
+            let mating_list = selected_monkeys.slice(0);
+            while (mating_list.length > 1)
+            {
+                let parents = this.selectMatingPair(mating_list);
+                let offspring = Monkey.mate(parents[0], parents[1], this.mutation_chance, this.target);
+                new_generation.push(offspring);
 
-            while (temp.length > 0) {
-                let monkey1 = this.getRandomMonkey(temp);
-                this.removeMonkey(monkey1, temp);
-
-                let monkey2 = this.getRandomMonkey(temp);
-                this.removeMonkey(monkey2, temp);
-
-                new_generation.push(Monkey.mate(monkey1, monkey2, this.mutation_chance, this.target));
+                if(new_generation.length === this.size)
+                {
+                    break;
+                }
             }
         }
+
+        this.generation++;
         this.monkeys = this.sortMonkeys(new_generation);
     }
 
+    selectMatingPair(monkeys)
+    {
+        let parent1 = this.getRandomMonkey(monkeys);
+        this.removeMonkey(parent1, monkeys);
+
+        let parent2 = this.getRandomMonkey(monkeys);
+        this.removeMonkey(parent2, monkeys);
+
+        return [parent1, parent2];
+    }
+
     // selects the monkeys that will mate
-    selectMatingMonkeys() {
+    selectMatingMonkeys()
+    {
         let selected_monkeys = [];
+        let unselected_monkeys = this.monkeys.slice(0);
 
-        for (let i = 0; i < this.size; i++) {
-            if (Math.random() < this.mating_chance) {
-                selected_monkeys.push(this.monkeys[i]);
+        // loop until enough monkeys have been selected
+        while (selected_monkeys.length !== this.mating_population)
+        {
+            if (unselected_monkeys.length <= 0)
+            {
+                console.error("cannot select more mating monkeys than exist in the population");
+                return null;
             }
-            if (selected_monkeys.length === this.mating_population) {
-                return selected_monkeys;
-            }
-        }
 
-        // if not enough moneys are selected, reselect
-        if (selected_monkeys.length !== this.mating_population) {
-            return this.selectMatingMonkeys();
+            // loop through the set of all unselected monkeys
+            for (let i = 0; i < unselected_monkeys.length; i++)
+            {
+
+                // if monkey is selected, add it to selected, remove it from unselected
+                if (Math.random() < this.mating_chance)
+                {
+                    let monkey = unselected_monkeys[i];
+                    selected_monkeys.push(monkey);
+                    this.removeMonkey(monkey, unselected_monkeys);
+                }
+
+                // if enough monkeys are selected
+                if (selected_monkeys.length === this.mating_population)
+                {
+                    return selected_monkeys;
+                }
+            }
         }
     }
 
-    // removes a given monkey from a given array, returns true if successful
-    removeMonkey(monkey, monkeys) {
+    // removes first instance of a given monkey from a given array, returns true if successful
+    removeMonkey(monkey, monkeys)
+    {
         let i = 0, l = monkeys.length;
-        for (i; i < l; i++) {
-            if (monkey === monkeys[i]) {
+        for (i; i < l; i++)
+        {
+            if (monkey === monkeys[i])
+            {
                 monkeys.splice(i, 1);
                 return true;
             }
@@ -80,13 +120,15 @@ export default class Population {
     }
 
     // gets a random monkey from a given array
-    getRandomMonkey(monkeys) {
+    getRandomMonkey(monkeys)
+    {
         let index = Math.floor(Math.random() * monkeys.length);
         return monkeys[index];
     }
 
     // sorts the population by fitness
-    sortMonkeys(monkeys) {
+    sortMonkeys(monkeys)
+    {
         let sorted = monkeys.concat();
         sorted.sort(Monkey.compare);
         sorted.reverse();
@@ -94,13 +136,15 @@ export default class Population {
     }
 
     // calculates the number of monkeys in a generation that will mate
-    calculateMatingPopulation(size, percentage) {
+    calculateMatingPopulation(size, percentage)
+    {
         let mating_pop = Math.round(size * percentage);
         return Math.max(mating_pop, 1);
     }
 
     // returns the monkey with the best fitness
-    getBestMonkey() {
+    getBestMonkey()
+    {
         return this.monkeys[0];
     }
 }
