@@ -13,7 +13,7 @@ let target = "Tomorrow, and tomorrow, and tomorrow,\n" +
     "Signifying nothing.";
 let population = new Population(500, target, 0.01, 0.95, 0.01);
 
-evolve(population);
+// evolve(population);
 
 async function evolve(population)
 {
