@@ -41,8 +41,8 @@ function displayOutput(output) {
 }
 
 // ----------- Evolution ----------- //
-function* evolve(population_size, target, mutation_chance, mating_chance, mating_percent, ms) {
-   let population = new Population(population_size, target, mutation_chance, mating_chance, mating_percent);
+function* evolve(population_size, target, mutation_chance, reproduction_chance, mating_percent, ms) {
+   let population = new Population(population_size, target, mutation_chance, reproduction_chance, mating_percent);
 
    while (population.getBestMonkey().fitness > 0) {
       population.createNewGeneration();
@@ -62,7 +62,7 @@ evolveButton.addEventListener('click', function (e) {
       reproduction_chance = reproNumber.value,
       mating_percent = mateNumber.value;
 
-   // evolve(10, "hello there general kenobi", 0, 0.9, 0.5, 0);
+   evolve(pop_size, target, mutation_chance, reproduction_chance, mating_percent, 0);
 });
 
 function getSanitizedInput() {
