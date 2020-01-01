@@ -1,5 +1,9 @@
 import Population from "./population.js";
 
+// ----------- DOM Elements ----------- //
+let evolveButton = document.querySelector("#evolve");
+
+
 // ----------- Main ----------- //
 let target = "Tomorrow, and tomorrow, and tomorrow,\n" +
     "Creeps in this petty pace from day to day,\n" +
