@@ -4,7 +4,7 @@ import Monkey from "./monkey.js";
 // the set of monkeys
 export default class Population
 {
-    constructor(size, target, mutation_chance, mating_chance, mating_percentage)
+    constructor(size, target, mating_percentage, reproduction_chance, mutation_chance)
     {
         this.generation = 1;
         this.size = size;
@@ -13,7 +13,7 @@ export default class Population
 
         this.mutation_chance = mutation_chance;
         this.mating_percentage = mating_percentage;
-        this.mating_chance = mating_chance;
+        this.reproduction_chance = reproduction_chance;
         this.mating_population = this.calculateMatingPopulation(this.size, this.mating_percentage);
     }
 
@@ -88,7 +88,7 @@ export default class Population
             {
 
                 // if monkey is selected, add it to selected, remove it from unselected
-                if (Math.random() < this.mating_chance)
+                if (Math.random() < this.reproduction_chance)
                 {
                     let monkey = unselected_monkeys[i];
                     selected_monkeys.push(monkey);

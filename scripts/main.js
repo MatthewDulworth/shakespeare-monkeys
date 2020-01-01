@@ -1,5 +1,6 @@
-import {makeSingle} from "./cancellable-async.js";
+import { makeSingle } from "./cancellable-async.js";
 import Population from "./population.js";
+import Monkey from "./monkey.js";
 
 // ----------- Vars ----------- //
 let quitEvolution = false;
@@ -9,8 +10,9 @@ let evolutionRunning = false;
 let evolveButton = document.querySelector("#evolve"),
    messageBox = document.querySelector("#message"),
    outputBox = document.querySelector("#output"),
-   inputBox = document.querySelector("#input"),
-   popNumber = document.querySelector("#controls-wrapper input:nth-of-type(1)"),
+   inputBox = document.querySelector("#input");
+
+let popNumber = document.querySelector("#controls-wrapper input:nth-of-type(1)"),
    popRange = document.querySelector("#controls-wrapper input:nth-of-type(2)"),
    mateNumber = document.querySelector("#controls-wrapper input:nth-of-type(3)"),
    mateRange = document.querySelector("#controls-wrapper input:nth-of-type(4)"),
@@ -25,16 +27,16 @@ popRange.addEventListener('input', e => popNumber.value = e.target.value);
 mateNumber.addEventListener('input', e => mateRange.value = e.target.value);
 mateRange.addEventListener('input', e => mateNumber.value = e.target.value);
 reproNumber.addEventListener('input', e => reproRange.value = e.target.value);
-reproRange.addEventListener('input', e => reproNumber.value = e.target.value );
+reproRange.addEventListener('input', e => reproNumber.value = e.target.value);
 mutationNumber.addEventListener('input', e => mutationRange.value = e.target.value);
 mutationRange.addEventListener('input', e => mutationNumber.value = e.target.value);
 
 // ----------- Text Boxes ----------- //
-function displayMessage(message){
+function displayMessage(message) {
    messageBox.textContent = message;
 }
 
-function displayOutput(output){
+function displayOutput(output) {
    outputBox.textContent = output;
 }
 
@@ -53,7 +55,26 @@ function* evolve(population_size, target, mutation_chance, mating_chance, mating
 }
 evolve = makeSingle(evolve);
 
-evolveButton.addEventListener('click', function (e) 
-{
-   evolve(10, "hello there general kenobi", 0, 0.9, 0.5, 0);
+evolveButton.addEventListener('click', function (e) {
+   let target = getSanitizedInput();
+   let pop_size = popNumber.value,
+      mutation_chance = mutationNumber.value,
+      reproduction_chance = reproNumber.value,
+      mating_percent = mateNumber.value;
+
+   // evolve(10, "hello there general kenobi", 0, 0.9, 0.5, 0);
 });
+
+function getSanitizedInput() {
+   let input = inputBox.textContent;
+   let sanitizedInput = "";
+
+   for (let i = 0; i < input.length; i++) {
+      let c = inputBox.textContent.charAt(i);
+      if (Monkey.nucleotides().includes(c)) {
+         sanitizedInput += c;
+      }
+   }
+
+   return sanitizedInput;
+}
