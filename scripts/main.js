@@ -1,7 +1,15 @@
+import {makeSingle} from "./cancellable-async.js";
 import Population from "./population.js";
+
+// ----------- Vars ----------- //
+let quitEvolution = false;
+let evolutionRunning = false;
 
 // ----------- DOM Elements ----------- //
 let evolveButton = document.querySelector("#evolve"),
+   messageBox = document.querySelector("#message"),
+   outputBox = document.querySelector("#output"),
+   inputBox = document.querySelector("#input"),
    popNumber = document.querySelector("#controls-wrapper input:nth-of-type(1)"),
    popRange = document.querySelector("#controls-wrapper input:nth-of-type(2)"),
    mateNumber = document.querySelector("#controls-wrapper input:nth-of-type(3)"),
@@ -11,7 +19,7 @@ let evolveButton = document.querySelector("#evolve"),
    mutationNumber = document.querySelector("#controls-wrapper input:nth-of-type(7)"),
    mutationRange = document.querySelector("#controls-wrapper input:nth-of-type(8)");
 
-// ----------- Input Listeners ----------- //
+// ----------- Control Inputs ----------- //
 popNumber.addEventListener('input', e => popRange.value = e.target.value);
 popRange.addEventListener('input', e => popNumber.value = e.target.value);
 mateNumber.addEventListener('input', e => mateRange.value = e.target.value);
@@ -21,27 +29,31 @@ reproRange.addEventListener('input', e => reproNumber.value = e.target.value );
 mutationNumber.addEventListener('input', e => mutationRange.value = e.target.value);
 mutationRange.addEventListener('input', e => mutationNumber.value = e.target.value);
 
-evolveButton.addEventListener('click', function (e) {
-   
-});
+// ----------- Text Boxes ----------- //
+function displayMessage(message){
+   messageBox.textContent = message;
+}
 
-// ----------- Main ----------- //
-//let population = new Population(500, target, 0.01, 0.95, 0.01);
-// evolve(population);
+function displayOutput(output){
+   outputBox.textContent = output;
+}
 
+// ----------- Evolution ----------- //
+function* evolve(population_size, target, mutation_chance, mating_chance, mating_percent, ms) {
+   let population = new Population(population_size, target, mutation_chance, mating_chance, mating_percent);
 
-// ----------- Evolve ----------- //
-async function evolve(population) 
-{
-   while (population.getBestMonkey().fitness > 0) 
-   {
+   while (population.getBestMonkey().fitness > 0) {
       population.createNewGeneration();
-      console.log(population.getBestMonkey());
 
-      if (population.getBestMonkey().fitness === 0) 
-      {
-         console.log(`goal reached in ${population.generation} generations`);
+      if (population.getBestMonkey().fitness === 0) {
+         return true;
       }
-      await new Promise(r => setTimeout(r, 0));
+      yield new Promise(r => setTimeout(r, ms));
    }
 }
+evolve = makeSingle(evolve);
+
+evolveButton.addEventListener('click', function (e) 
+{
+   evolve(10, "hello there general kenobi", 0, 0.9, 0.5, 0);
+});
