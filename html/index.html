@@ -13,8 +13,7 @@
 
 <body>
 
-   <section id="text-area-wrapper">
-      <textarea name="target" id="target" cols="50" rows="20" spellcheck="false" autocomplete="off">
+   <textarea name="target" id="input" spellcheck="false" autocomplete="off">
 To be, or not to be, that is the question:
 Whether 'tis nobler in the mind to suffer
 The slings and arrows of outrageous fortune,
@@ -48,29 +47,33 @@ Is sicklied o'er with the pale cast of thought,
 And enterprises of great pitch and moment
 With this regard their currents turn awry
 And lose the name of action.</textarea>
-   </section>
 
-   <section id="controls">
+
+   <section id="controls-wrapper">
 
       <div class="control">Population Size:</div>
       <input class="control" type="number" name="pop_size" value="0" min="0" max="5000">
       <input class="control" type="range" name="pop_size_r" value="0" autocomplete="off" min="0" max="5000">
 
       <div class="control">Mating Percentage:</div>
-      <input class="control" class="control" type="number" name="mate_percent_n" value="0" min="0" max="1" step="0.01">
-      <input class="control" type="range" name="mate_percent_r" value="0" autocomplete="off" min="0" max="1" step="0.01">
+      <input class="control" class="control" type="number" name="mate_percent_n" value="0" min="0" max="1" step="0.001">
+      <input class="control" type="range" name="mate_percent_r" value="0" autocomplete="off" min="0" max="1"
+         step="0.01">
 
       <div class="control">Reproduction Chance:</div>
-      <input class="control" type="number" name="rep_chance_n" value="0" min="0" max="1" step="0.01">
+      <input class="control" type="number" name="rep_chance_n" value="0" min="0" max="1" step="0.001">
       <input class="control" type="range" name="rep_chance_r" value="0" autocomplete="off" min="0" max="1" step="0.01">
 
       <div class="control">Mutation Chance:</div>
-      <input class="control" type="number" name="mutation_chance_n" value="0" min="0" max="1" step="0.01">
-      <input class="control" type="range" name="mutation_chance_r" value="0" autocomplete="off" min="0" max="1" step="0.01">
+      <input class="control" type="number" name="mutation_chance_n" value="0" min="0" max="1" step="0.001">
+      <input class="control" type="range" name="mutation_chance_r" value="0" autocomplete="off" min="0" max="1"
+         step="0.01">
 
    </section>
 
    <button type="button" id="evolve">Evolve</button>
+
+   <p id="output"></p>
 </body>
 
 </html>
