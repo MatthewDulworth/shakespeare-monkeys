@@ -16,13 +16,26 @@ textarea {
    resize: none;
 }
 
+p{
+   margin: 0px;
+}
+
 #input, #output{
    width: 400px;
-   height: 280px;
+   height: 250px;
    border: 1px solid grey;
    padding: 5px;
    font-family: monospace;
    overflow: auto;
+}
+
+#message{
+   width: 400px;
+   height: 30px;
+   border: 1px solid grey;
+   padding: 5px;
+   font-family: monospace;
+   margin: 10px 0px;
 }
 
 #controls-wrapper {
