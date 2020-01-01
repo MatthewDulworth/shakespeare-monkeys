@@ -6,24 +6,26 @@
    box-sizing: inherit;
 }
 
-body{
+
+body {
    display: flex;
    flex-direction: column;
    align-items: center;
 }
 
-textarea{
+textarea {
    resize: none;
 }
 
-#controls{
+#controls {
    display: grid;
    grid-template-columns: auto auto auto;
    grid-template-rows: auto auto auto;
    grid-row-gap: 10px;
+   grid-column-gap: 20px;
    margin: 20px 0px;
 }
 
-input[type="number"]{
+input[type="number"] {
    width: 40px;
 }
