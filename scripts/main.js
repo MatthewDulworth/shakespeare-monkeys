@@ -1,6 +1,6 @@
 import Population from "./population.js";
 
-// // ----------- Main ----------- //
+// ----------- Main ----------- //
 let target = "Tomorrow, and tomorrow, and tomorrow,\n" +
     "Creeps in this petty pace from day to day,\n" +
     "To the last syllable of recorded time;\n" +
