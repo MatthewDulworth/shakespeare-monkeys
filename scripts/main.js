@@ -15,8 +15,8 @@ let evolveButton = document.querySelector("#evolve"),
    outputBox = document.querySelector("#output"),
    inputBox = document.querySelector("#input");
 
-let numberInputs = document.querySelectorAll("#controls-wrapper input:nth-of-type(odd)");
-let rangeInputs = document.querySelectorAll("#controls-wrapper input:nth-of-type(even)")
+let numberInputs = document.querySelectorAll("#controls input:nth-of-type(odd)");
+let rangeInputs = document.querySelectorAll("#controls input:nth-of-type(even)")
 
 
 // ----------- On load ----------- //

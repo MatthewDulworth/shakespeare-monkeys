@@ -13,7 +13,8 @@
 
 <body>
 
-   <textarea name="target" id="input" spellcheck="false" autocomplete="off">
+   <section class="input-wrapper">
+      <textarea name="target" id="input" spellcheck="false" autocomplete="off" maxlength="1500">
 To be, or not to be, that is the question:
 Whether 'tis nobler in the mind to suffer
 The slings and arrows of outrageous fortune,
@@ -47,32 +48,43 @@ Is sicklied o'er with the pale cast of thought,
 And enterprises of great pitch and moment
 With this regard their currents turn awry
 And lose the name of action.</textarea>
-
+   </section>
 
    <section id="controls-wrapper">
 
-      <div class="control">Population Size:</div>
-      <input class="control" type="number" name="pop_size" value="5000" min="2" max="5000" autocomplete="off">
-      <input class="control" type="range" name="pop_size_r" value="5000" min="2" max="5000" autocomplete="off">
+      <p id="message">Generation: 0</p>
 
-      <div class="control">Mating Pool:</div>
-      <input class="control" type="number" name="mate_percent_n" value="5000" min="2" max="5000" step="1" autocomplete="off">
-      <input class="control" type="range" name="mate_percent_r" value="5000" min="2" max="5000" step="1" autocomplete="off">
+      <div id="controls">
+         <div class="control">Population Size:</div>
+         <input class="control" type="number" name="pop_size" value="5000" min="2" max="5000" autocomplete="off">
+         <input class="control" type="range" name="pop_size_r" value="5000" min="2" max="5000" autocomplete="off">
 
-      <div class="control">Reproduction Chance:</div>
-      <input class="control" type="number" name="rep_chance_n" value="0.001" min="0.001" max="1" step="0.001" autocomplete="off">
-      <input class="control" type="range" name="rep_chance_r" value="0.001" min="0.001" max="1" step="0.001" autocomplete="off">
+         <div class="control">Mating Pool:</div>
+         <input class="control" type="number" name="mate_percent_n" value="5000" min="2" max="5000" step="1"
+            autocomplete="off">
+         <input class="control" type="range" name="mate_percent_r" value="5000" min="2" max="5000" step="1"
+            autocomplete="off">
 
-      <div class="control">Mutation Chance:</div>
-      <input class="control" type="number" name="mutation_chance_n" value="0.001" min="0.001" max="1" step="0.001" autocomplete="off">
-      <input class="control" type="range" name="mutation_chance_r" value="0.001" min="0.001" max="1" step="0.001" autocomplete="off">
+         <div class="control">Reproduction Chance:</div>
+         <input class="control" type="number" name="rep_chance_n" value="0.001" min="0.001" max="1" step="0.001"
+            autocomplete="off">
+         <input class="control" type="range" name="rep_chance_r" value="0.001" min="0.001" max="1" step="0.001"
+            autocomplete="off">
+
+         <div class="control">Mutation Chance:</div>
+         <input class="control" type="number" name="mutation_chance_n" value="0.001" min="0.001" max="1" step="0.001"
+            autocomplete="off">
+         <input class="control" type="range" name="mutation_chance_r" value="0.001" min="0.001" max="1" step="0.001"
+            autocomplete="off">
+      </div>
+
+      <button type="button" id="evolve">Evolve</button>
 
    </section>
 
-   <button type="button" id="evolve">Evolve</button>
-
-   <p id="message"></p>
-   <p id="output"></p>
+   <section class="output-wrapper">
+      <p id="output"></p>
+   </section>
 </body>
 
 </html>

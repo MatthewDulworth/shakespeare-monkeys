@@ -6,39 +6,50 @@
    box-sizing: inherit;
 }
 
-body {
-   display: flex;
-   flex-direction: column;
-   align-items: center;
-}
-
 textarea {
    resize: none;
 }
 
-p{
+p {
    margin: 0px;
 }
 
-#input, #output{
+body {
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   justify-content: space-around;
+}
+
+#input, #output {
    width: 400px;
-   height: 250px;
+   height: 550px;
    border: 1px solid grey;
    padding: 5px;
    font-family: monospace;
    overflow: auto;
+   word-wrap: break-word;
 }
 
-#message{
+#message {
    width: 400px;
    height: 30px;
    border: 1px solid grey;
    padding: 5px;
    font-family: monospace;
    margin: 10px 0px;
+   text-align: center;
+   vertical-align: middle;
+   line-height: 30px;
 }
 
 #controls-wrapper {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+}
+
+#controls {
    display: grid;
    grid-template-columns: auto auto auto;
    grid-template-rows: auto auto auto;
