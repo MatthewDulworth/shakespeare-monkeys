@@ -1,12 +1,10 @@
 export default class CancellableAsync {
    constructor(generator) {
-      console.log("yeet2");
       this.generator = this.makeSingle(generator);
       this.takeoverSymbol = Symbol('takeover');
       this.terminationSymbol = Symbol('termination');
       this.isRunning = false;
       this.quit = false;
-      this.h = "h";
    }
 
    // modified from source: https://gist.github.com/samthor/8f72127e3cf44bca1fc6527ce7e47023

@@ -57,12 +57,12 @@ export default class Monkey
     // returns a random nucleotide
     static getRandomNucleotide()
     {
-        let nucleotides = Monkey.nucleotides();
+        let nucleotides = Monkey.nucleotides;
         let index = Math.floor(Math.random() * nucleotides.length);
         return nucleotides.charAt(index);
     }
 
-    static nucleotides(){
+    static get nucleotides(){
        return "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789{}[]|~`!@#$%^&*()-_=+<>, .?/:;\'\"\\\n";
     }
 

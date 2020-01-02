@@ -3,16 +3,15 @@ import Monkey from "./monkey.js";
 // ----------- Population ----------- //
 // the set of monkeys
 export default class Population {
-   constructor(size, target, mating_percentage, reproduction_chance, mutation_chance) {
+   constructor(size, target, mating_pool, reproduction_chance, mutation_chance) {
       this.generation = 1;
       this.size = size;
       this.target = target;
       this.monkeys = this.initialPopulation(this.size, this.target);
 
       this.mutation_chance = mutation_chance;
-      this.mating_percentage = mating_percentage;
       this.reproduction_chance = reproduction_chance;
-      this.mating_population = this.calculateMatingPopulation(this.size, this.mating_percentage);
+      this.mating_pool = mating_pool;
    }
 
    // generates a random initial population
@@ -70,7 +69,7 @@ export default class Population {
       let unselected_monkeys = this.monkeys.slice(0);
 
       // loop until enough monkeys have been selected
-      while (selected_monkeys.length !== this.mating_population) {
+      while (selected_monkeys.length !== this.mating_pool) {
          if (unselected_monkeys.length <= 0) {
             console.error("cannot select more mating monkeys than exist in the population");
             return null;
@@ -87,7 +86,7 @@ export default class Population {
             }
 
             // if enough monkeys are selected
-            if (selected_monkeys.length === this.mating_population) {
+            if (selected_monkeys.length === this.mating_pool) {
                return selected_monkeys;
             }
          }
@@ -118,12 +117,6 @@ export default class Population {
       sorted.sort(Monkey.compare);
       sorted.reverse();
       return sorted;
-   }
-
-   // calculates the number of monkeys in a generation that will mate
-   calculateMatingPopulation(size, percentage) {
-      let mating_pop = Math.round(size * percentage);
-      return Math.max(mating_pop, 1);
    }
 
    // returns the monkey with the best fitness
