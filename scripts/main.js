@@ -1,10 +1,9 @@
-import { makeSingle } from "./cancellable-async.js";
+import CancellableAsync from "./cancellable-async.js";
 import Population from "./population.js";
 import Monkey from "./monkey.js";
 
 // ----------- Vars ----------- //
-let quitEvolution = false;
-let evolutionRunning = false;
+var evolution = null;
 
 // ----------- DOM Elements ----------- //
 let evolveButton = document.querySelector("#evolve"),
@@ -43,17 +42,32 @@ function displayOutput(output) {
 // ----------- Evolution ----------- //
 function* evolve(population_size, target, mutation_chance, reproduction_chance, mating_percent, ms) {
    let population = new Population(population_size, target, mutation_chance, reproduction_chance, mating_percent);
-
-   while (population.getBestMonkey().fitness > 0) {
-      population.createNewGeneration();
-
-      if (population.getBestMonkey().fitness === 0) {
-         return true;
+   
+   try{
+      while (population.getBestMonkey().fitness > 0) {
+         population.createNewGeneration();
+   
+         if (population.getBestMonkey().fitness === 0) {
+            return true;
+         }
+        
+         yield new Promise(r => setTimeout(r, ms));
       }
-      yield new Promise(r => setTimeout(r, ms));
+   }
+   catch(e){
+      if(e.message == 'single-monkey'){
+         console.log("yeet");
+      }
    }
 }
-evolve = makeSingle(evolve);
+
+function initializeEvolve()
+{
+   if(evolution === null){
+      evolution = new CancellableAsync(evolve);
+   }  
+}
+
 
 evolveButton.addEventListener('click', function (e) {
    let target = getSanitizedInput();
@@ -62,7 +76,9 @@ evolveButton.addEventListener('click', function (e) {
       reproduction_chance = reproNumber.value,
       mating_percent = mateNumber.value;
 
-   evolve(pop_size, target, mutation_chance, reproduction_chance, mating_percent, 0);
+   initializeEvolve();
+
+   evolution.run(pop_size, target, mutation_chance, reproduction_chance, mating_percent);
 });
 
 function getSanitizedInput() {
@@ -78,3 +94,5 @@ function getSanitizedInput() {
 
    return sanitizedInput;
 }
+
+// ----------- Main ----------- //
