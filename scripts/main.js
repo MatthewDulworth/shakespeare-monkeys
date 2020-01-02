@@ -9,6 +9,21 @@ const MATE = 1;
 const REPRODUCTION = 2;
 const MUTATION = 3;
 
+const sample_text = "To be, or not to be, that is the question:\n" +
+   "Whether 'tis nobler in the mind to suffer\n" +
+   "The slings and arrows of outrageous fortune,\n" +
+   "Or to take arms against a sea of troubles\n" +
+   "And by opposing end them. To die-to sleep,\n" +
+   "No more; and by a sleep to say we end\n" +
+   "The heart-ache and the thousand natural shocks\n" +
+   "That flesh is heir to: 'tis a consummation\n" +
+   "Devoutly to be wish'd. To die, to sleep;\n" +
+   "To sleep, perchance to dream-ay, there's the rub:\n" +
+   "For in that sleep of death what dreams may come,\n" +
+   "When we have shuffled off this mortal coil,\n" +
+   "Must give us pause-there's the respect\n" +
+   "That makes calamity of so long life.\n";
+
 // ----------- DOM Elements ----------- //
 let evolveButton = document.querySelector("#evolve"),
    terminateButton = document.querySelector("#terminate"),
@@ -22,6 +37,7 @@ let rangeInputs = document.querySelectorAll("#controls input:nth-of-type(even)")
 
 // ----------- On load ----------- //
 window.onload = function () {
+   inputBox.value = sample_text;
    evolution = new CancellableAsync(evolve);
 }
 
@@ -93,18 +109,18 @@ function sanitizeNumberInput(index) {
 }
 
 function sanitizeTargetString(inputElement) {
-   let input = inputElement.textContent;
+   let input = inputElement.value;
    let sanitizedInput = "";
 
    for (let i = 0; i < input.length; i++) {
-      let c = inputBox.textContent.charAt(i);
+      let c = inputBox.value.charAt(i);
       if (Monkey.nucleotides.includes(c)) {
          sanitizedInput += c;
       }
    }
-   inputElement.textContent = sanitizedInput;
+   inputElement.value = sanitizedInput;
 
-   return inputElement.textContent;
+   return inputElement.value;
 }
 
 function clamp(num, min, max) {
@@ -123,8 +139,13 @@ function* evolve(pop_size, target, mating_pool, reproduction_chance, mutation_ch
          population.createNewGeneration();
 
          if (population.getBestMonkey().fitness === 0) {
+            displayMessage(`Finished in ${population.generation} generations!`);
+            displayOutput(population.getBestMonkey().genome);
             return true;
          }
+
+         displayMessage(`Generation: ${population.generation} Best Fitness ${population.getBestMonkey().fitness}`);
+         displayOutput(population.getBestMonkey().genome);
 
          yield new Promise(r => setTimeout(r, ms));
       }
@@ -138,9 +159,11 @@ function* evolve(pop_size, target, mating_pool, reproduction_chance, mutation_ch
 
 evolveButton.addEventListener('click', function (e) {
    let input = getSanitizedInput();
-   evolution.run(input.pop_size, input.target, input.mating_pool, input.reproduction_chance, input.mutation_chance, 1000);
+   evolution.run(input.pop_size, input.target, input.mating_pool, input.reproduction_chance, input.mutation_chance, 0);
 });
 
-terminateButton.addEventListener('click', function(e) {
+terminateButton.addEventListener('click', function (e) {
+   displayMessage("Terminated Evolution");
+   displayOutput("");
    evolution.terminate();
 });
