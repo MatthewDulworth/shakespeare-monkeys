@@ -11,6 +11,7 @@ const MUTATION = 3;
 
 // ----------- DOM Elements ----------- //
 let evolveButton = document.querySelector("#evolve"),
+   terminateButton = document.querySelector("#terminate"),
    messageBox = document.querySelector("#message"),
    outputBox = document.querySelector("#output"),
    inputBox = document.querySelector("#input");
@@ -88,7 +89,7 @@ function sanitizeNumberInput(index) {
       number.value = clamp(number.value, number.min, number.max);
       range.value = clamp(number.value, number.min, number.max);
    }
-   return numberInputs[index].value;
+   return parseFloat(numberInputs[index].value);
 }
 
 function sanitizeTargetString(inputElement) {
@@ -135,14 +136,11 @@ function* evolve(pop_size, target, mating_pool, reproduction_chance, mutation_ch
    }
 }
 
-var yeet = true;
 evolveButton.addEventListener('click', function (e) {
-   if (yeet) {
-      let input = getSanitizedInput();
-      evolution.run(input.pop_size, input.target, input.mating_pool, input.reproduction_chance, input.mutation_chance, 1000);
-      yeet = false;
-   }
-   else {
-      evolution.terminate;
-   }
+   let input = getSanitizedInput();
+   evolution.run(input.pop_size, input.target, input.mating_pool, input.reproduction_chance, input.mutation_chance, 1000);
+});
+
+terminateButton.addEventListener('click', function(e) {
+   evolution.terminate();
 });
