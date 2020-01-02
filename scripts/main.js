@@ -34,10 +34,8 @@ for (let i = 0; i < numberInputs.length; i++) {
    });
 
    // link range value to number value
-   rangeInputs[i].addEventListener('input', e => {
-      sanitizeNumberInput(i);
-      numberInputs[i].value = e.target.value;
-   });
+   rangeInputs[i].addEventListener('input', e => numberInputs[i].value = e.target.value);
+   rangeInputs[i].addEventListener('input', e => sanitizeNumberInput(i));
 }
 numberInputs[POPULATION].addEventListener('input', e => handleMatingPoolMax(POPULATION));
 rangeInputs[POPULATION].addEventListener('input', e => handleMatingPoolMax(POPULATION));
