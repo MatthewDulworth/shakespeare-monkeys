@@ -4,6 +4,10 @@ import Monkey from "./monkey.js";
 
 // ----------- Vars ----------- //
 let evolution;
+const POPULATION = 0;
+const MATE = 1;
+const REPRODUCTION = 2;
+const MUTATION = 3;
 
 // ----------- DOM Elements ----------- //
 let evolveButton = document.querySelector("#evolve"),
@@ -11,35 +15,33 @@ let evolveButton = document.querySelector("#evolve"),
    outputBox = document.querySelector("#output"),
    inputBox = document.querySelector("#input");
 
-let popNumber = document.querySelector("#controls-wrapper input:nth-of-type(1)"),
-   popRange = document.querySelector("#controls-wrapper input:nth-of-type(2)"),
-   mateNumber = document.querySelector("#controls-wrapper input:nth-of-type(3)"),
-   mateRange = document.querySelector("#controls-wrapper input:nth-of-type(4)"),
-   reproNumber = document.querySelector("#controls-wrapper input:nth-of-type(5)"),
-   reproRange = document.querySelector("#controls-wrapper input:nth-of-type(6)"),
-   mutationNumber = document.querySelector("#controls-wrapper input:nth-of-type(7)"),
-   mutationRange = document.querySelector("#controls-wrapper input:nth-of-type(8)");
+let numberInputs = document.querySelectorAll("#controls-wrapper input:nth-of-type(odd)");
+let rangeInputs = document.querySelectorAll("#controls-wrapper input:nth-of-type(even)")
 
 
 // ----------- On load ----------- //
 window.onload = function () {
-   handleMatingPoolMax(popNumber);
-   handleMatingPoolMax(popRange);
    evolution = new CancellableAsync(evolve);
 }
 
-// ----------- Control Inputs ----------- //
-popNumber.addEventListener('input', e => popRange.value = e.target.value);
-popRange.addEventListener('input', e => popNumber.value = e.target.value);
-mateNumber.addEventListener('input', e => mateRange.value = e.target.value);
-mateRange.addEventListener('input', e => mateNumber.value = e.target.value);
-reproNumber.addEventListener('input', e => reproRange.value = e.target.value);
-reproRange.addEventListener('input', e => reproNumber.value = e.target.value);
-mutationNumber.addEventListener('input', e => mutationRange.value = e.target.value);
-mutationRange.addEventListener('input', e => mutationNumber.value = e.target.value);
+// ----------- Control Input Listners ----------- //
+for (let i = 0; i < numberInputs.length; i++) {
 
-popNumber.addEventListener('input', e => handleMatingPoolMax(e.target));
-popRange.addEventListener('mouseup', e => handleMatingPoolMax(e.target));
+   // link number value to range value
+   numberInputs[i].addEventListener('input', e => {
+      sanitizeNumberInput(i);
+      rangeInputs[i].value = e.target.value;
+   });
+
+   // link range value to number value
+   rangeInputs[i].addEventListener('input', e => {
+      sanitizeNumberInput(i);
+      numberInputs[i].value = e.target.value;
+   });
+}
+numberInputs[POPULATION].addEventListener('input', e => handleMatingPoolMax(POPULATION));
+rangeInputs[POPULATION].addEventListener('input', e => handleMatingPoolMax(POPULATION));
+
 
 // ----------- Display ----------- //
 function displayMessage(message) {
@@ -50,41 +52,45 @@ function displayOutput(output) {
    outputBox.textContent = output;
 }
 
-function handleMatingPoolMax(inputElement) {
-   sanitizeNumberInput(inputElement);
-   let val = inputElement.value;
+function handleMatingPoolMax(index) {
+   sanitizeNumberInput(index);
+   let val = numberInputs[index].value;
 
-   if (mateNumber.value > val || mateRange.value > val) {
-      mateNumber.value = val;
-      mateRange.value = val;
+   if (numberInputs[MATE].value > val || rangeInputs[MATE].value > val) {
+      numberInputs[MATE].value = val;
+      rangeInputs[MATE].value = val;
    }
-   mateNumber.max = val;
-   mateRange.max = val;
+   numberInputs[MATE].max = val;
+   rangeInputs[MATE].max = val;
 
-   sanitizeNumberInput(mateNumber);
-   sanitizeNumberInput(mateRange);
+   sanitizeNumberInput(MATE);
 }
 
 // ----------- Sanitization ----------- //
-function sanitizeNumberInput(inputElement) {
-   if (inputElement.value === undefined || inputElement.value === "" || inputElement.value === null) {
-      inputElement.value = 0;
-   }
-   else {
-      inputElement.value = clamp(inputElement.value, inputElement.min, inputElement.max);
-   }
-   return inputElement.value;
-}
-
 function getSanitizedInput() {
    let input = {};
-   input.pop_size = sanitizeNumberInput(popNumber);
+   input.pop_size = sanitizeNumberInput(POPULATION);
    input.target = sanitizeTargetString(inputBox);
-   input.mating_pool = sanitizeNumberInput(mateNumber);
-   input.reproduction_chance = sanitizeNumberInput(reproNumber);
-   input.mutation_chance = sanitizeNumberInput(mutationNumber);
+   input.mating_pool = sanitizeNumberInput(MATE);
+   input.reproduction_chance = sanitizeNumberInput(REPRODUCTION);
+   input.mutation_chance = sanitizeNumberInput(MUTATION);
 
    return input;
+}
+
+function sanitizeNumberInput(index) {
+   let number = numberInputs[index];
+   let range = rangeInputs[index];
+
+   if (number.value.length == 0 || range.value.length == 0) {
+      number.value = number.min;
+      range.value = range.min;
+   }
+   else {
+      number.value = clamp(number.value, number.min, number.max);
+      range.value = clamp(number.value, number.min, number.max);
+   }
+   return numberInputs[index].value;
 }
 
 function sanitizeTargetString(inputElement) {
