@@ -3,7 +3,7 @@ import Population from "./population.js";
 import Monkey from "./monkey.js";
 
 // ----------- Vars ----------- //
-let evolution = null;
+let evolution;
 
 // ----------- DOM Elements ----------- //
 let evolveButton = document.querySelector("#evolve"),
@@ -41,7 +41,7 @@ mutationRange.addEventListener('input', e => mutationNumber.value = e.target.val
 popNumber.addEventListener('input', e => handleMatingPoolMax(e.target));
 popRange.addEventListener('mouseup', e => handleMatingPoolMax(e.target));
 
-// ----------- Functions ----------- //
+// ----------- Display ----------- //
 function displayMessage(message) {
    messageBox.textContent = message;
 }
@@ -65,6 +65,7 @@ function handleMatingPoolMax(inputElement) {
    sanitizeNumberInput(mateRange);
 }
 
+// ----------- Sanitization ----------- //
 function sanitizeNumberInput(inputElement) {
    if (inputElement.value === undefined || inputElement.value === "" || inputElement.value === null) {
       inputElement.value = 0;

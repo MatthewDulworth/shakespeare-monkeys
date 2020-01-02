@@ -69,11 +69,7 @@ export default class Population {
       let unselected_monkeys = this.monkeys.slice(0);
 
       // loop until enough monkeys have been selected
-      while (selected_monkeys.length !== this.mating_pool) {
-         if (unselected_monkeys.length <= 0) {
-            console.error("cannot select more mating monkeys than exist in the population");
-            return null;
-         }
+      while (true) {
 
          // loop through the set of all unselected monkeys
          for (let i = 0; i < unselected_monkeys.length; i++) {
