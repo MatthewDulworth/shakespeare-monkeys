@@ -19,10 +19,7 @@ const sample_text = "To be, or not to be, that is the question:\n" +
    "That flesh is heir to: 'tis a consummation\n" +
    "Devoutly to be wish'd. To die, to sleep;\n" +
    "To sleep, perchance to dream-ay, there's the rub:\n" +
-   "For in that sleep of death what dreams may come,\n" +
-   "When we have shuffled off this mortal coil,\n" +
-   "Must give us pause-there's the respect\n" +
-   "That makes calamity of so long life.\n";
+   "For in that sleep of death what dreams may come.\n";
 
 // ----------- DOM Elements ----------- //
 let evolveButton = document.querySelector("#evolve"),
@@ -144,7 +141,7 @@ function* evolve(pop_size, target, mating_pool, reproduction_chance, mutation_ch
             return true;
          }
 
-         displayMessage(`Generation: ${population.generation} Best Fitness ${population.getBestMonkey().fitness}`);
+         displayMessage(`Generation: ${population.generation}, Best Fitness: ${population.getBestMonkey().fitness}`);
          displayOutput(population.getBestMonkey().genome);
 
          yield new Promise(r => setTimeout(r, ms));
