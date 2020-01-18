@@ -1,1 +1,5 @@
-This app is not currently hosted anywhere, so you need to download and run it yourself.
+#Shakespeare Monkeys
+
+genetic algorithim that writes shakespeare or any other short message
+
+demo: https://matthewdulworth.github.io/shakespeare-monkeys/
