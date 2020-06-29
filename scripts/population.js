@@ -1,8 +1,7 @@
-import Monkey from "./monkey.js";
 
 // ----------- Population ----------- //
 // the set of monkeys
-export default class Population {
+class Population {
    constructor(size, target, mating_pool, reproduction_chance, mutation_chance) {
       this.generation = 1;
       this.size = size;

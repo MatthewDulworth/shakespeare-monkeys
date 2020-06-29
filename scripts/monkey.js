@@ -1,6 +1,6 @@
 // ----------- Monkey ----------- //
 // each monkey has a genome and a fitness score
-export default class Monkey
+class Monkey
 {
 
     constructor(genome)

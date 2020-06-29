@@ -1,4 +1,4 @@
-export default class CancellableAsync {
+class CancellableAsync {
    constructor(generator) {
       this.generator = this.makeSingle(generator);
       this.takeoverSymbol = Symbol('takeover');

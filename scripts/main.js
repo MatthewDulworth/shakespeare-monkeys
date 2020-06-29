@@ -1,7 +1,3 @@
-import CancellableAsync from "./cancellable-async.js";
-import Population from "./population.js";
-import Monkey from "./monkey.js";
-
 // ----------- Vars ----------- //
 let evolution;
 const POPULATION = 0;
